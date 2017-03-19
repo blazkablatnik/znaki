@@ -16,18 +16,24 @@ $word = $words[rand(0, count($words) - 1)];
 $letters = str_split($word);
 
 // Prikazi vsako crko posebej
+$id = 0;
 foreach($letters as $l) {
     // Izberi moznosti, ki se bodo prikazale pri posamezni crki
     $possibilities = return_possibilities($l, $alphabet, $num_choices);
     
     // Izpisi vse moznosti
-    echo "<div class='letter-wrap'>";
+    echo "<div id='letter_" . $id . "' class='letter-wrap'>";
     echo "<div class='letter'><h3>" . $l . "</h3></div>";
     
+    $id_pos = 0;
     foreach($possibilities as $p) {
-        echo "<img src='" . get_letter_image_url($p, $alphabet) . "' /><br />";
+        echo "<div class='pos_" . $id_pos . "'>";
+        echo "<img src='" . get_letter_image_url($p, $alphabet) . "' />";
+        echo "</div>"; // pos_($id_pos)
+        $id_pos ++;
     }
     echo "</div>"; // letter-wrap
+    $id ++;
 }
 
 function return_possibilities($letter, $alphabet, $num_choices) {
@@ -47,8 +53,9 @@ function return_possibilities($letter, $alphabet, $num_choices) {
 function get_letter_image_url($letter, $alphabet) {
     $image_url = "Znaki/" . strtolower($letter) . ".png";
     if(!file_exists($image_url)) {
+        // Zacetnih nekaj crk je hkrati tudi stevilk, zato zgornji link mogoce ni pravi
         $num = array_search($letter, $alphabet) + 1;
-        if ($num == 11) {
+        if ($num == 11) { // Posebnost - crka K
             $num = 0;
         }
         $image_url = "Znaki/" . strtolower($letter) . "_" . $num . ".png";
