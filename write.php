@@ -7,5 +7,6 @@
     </head>
     <body>
         <h1>Pisanje</h1>
+        <?php include "get_word.php"; ?>
     </body>
 </html>
